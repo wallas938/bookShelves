@@ -10,13 +10,15 @@ import { Router } from '@angular/router';
 })
 export class SigninComponent implements OnInit {
 
- 
+
   signInForm: FormGroup
   errorMessage: string
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router
+    ) { }
 
   ngOnInit() {
     this.initForm();
