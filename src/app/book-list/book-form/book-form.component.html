@@ -20,10 +20,21 @@
                   id="author" 
                   formControlName="author">
         </div>
+        <div class="form-group">
+          <h4>
+            Ajouter une photo
+          </h4>
+          <input  type="file" 
+                  (change)="detectFile($event)" 
+                  class="form-control"
+                  accept="image/*">
+          <p *ngIf="fileUploaded" class="text-success">
+          Fichier Chargé
+          </p>
+        </div>
       <button class="btn btn-success"
-              [disabled]="bookForm.invalid"
-              type="submit"
-              >
+              [disabled]="bookForm.invalid || fileIsUploading"
+              type="submit">
               Enregistrer
       </button>
     </form>

@@ -7,10 +7,8 @@
       <button class="list-group-item" *ngFor="let book of books; let i = index" (click)="onViewBook(i)">
         <h3 class="list-group-item-heading">
           {{ book.title }}
-          <button class="btn btn-default right" (click)="onDeleteBook(book)">
-            <span class="glyphihcon glyphihcon-minus">
-
-            </span>
+          <button class="btn btn-danger" (click)="onDeleteBook(book)">
+              Effacer
           </button>
         </h3>
         <p class="list-group-item-text">

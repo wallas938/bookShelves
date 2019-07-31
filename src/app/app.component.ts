@@ -9,12 +9,12 @@ export class AppComponent {
   title = 'gestionnaire-de-livre';
 
   constructor() {
-    var firebaseConfig = {
+    const firebaseConfig = {
       apiKey: "AIzaSyAy1UhjNO70sIMlibMV8C-_16Nq483ATJw",
       authDomain: "bookshelves-ad036.firebaseapp.com",
       databaseURL: "https://bookshelves-ad036.firebaseio.com",
       projectId: "bookshelves-ad036",
-      storageBucket: "",
+      storageBucket: "bookshelves-ad036.appspot.com",
       messagingSenderId: "591959863427",
       appId: "1:591959863427:web:32b17e255d86da2a"
     };

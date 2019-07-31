@@ -8,6 +8,7 @@ import * as firebase from 'firebase';
 export class BooksService {
   books: Book[] = []
   booksSubject = new Subject<Book[]>()
+
   constructor() { }
 
   emitBooks() {
@@ -16,40 +17,40 @@ export class BooksService {
 
   saveBooks() {
     firebase.database()
-            .ref('/books')
-            .set(this.books)
-            .then(
-              () => {
-                console.log('succeeded')
-              }, (er) => {
-                console.log(er)
-              }
-            )
+      .ref('/books')
+      .set(this.books)
+      .then(
+        () => {
+          console.log('succeeded')
+        }, (er) => {
+          console.log(er)
+        }
+      )
   }
 
   getBooks() {
     firebase.database()
-            .ref('/books')
-            .on('value', (data) => {
-              this.books = data.val() ? data.val() : []
-              this.emitBooks()
-            })
+      .ref('/books')
+      .on('value', (data) => {
+        this.books = data.val() ? data.val() : []
+        this.emitBooks()
+      })
   }
 
   getSingleBook(id: number) {
     return new Promise(
       (resolve, reject) => {
         firebase.database()
-                .ref('/books/' + id)
-                .once('value')
-                .then(
-                  data => {
-                    console.log(data.val())
-                    resolve(data.val())
-                  },(error) => {
-                    reject(error)
-                  }
-                )
+          .ref('/books/' + id)
+          .once('value')
+          .then(
+            data => {
+              console.log(data.val())
+              resolve(data.val())
+            }, (error) => {
+              reject(error)
+            }
+          )
       }
     )
   }
@@ -63,12 +64,38 @@ export class BooksService {
   removeBook(book: Book) {
     const bookIndexToRemove = this.books.findIndex(
       bookEl => {
-        if(bookEl === book)
+        if (bookEl === book)
           return true
       }
     )
     this.books.splice(bookIndexToRemove, 1)
     this.saveBooks()
     this.emitBooks()
+  }
+
+  uploadFile(file: File) {
+    return new Promise(
+      (resolve, reject) => {
+        const almostUniqueFilename = Date.now().toString()
+        firebase.storage()
+          .ref()
+          .child('images/' + almostUniqueFilename + file.name)
+          .put(file)
+          .then(
+            snapshot => {
+              console.log(snapshot)
+              return snapshot.ref.getDownloadURL()
+            })
+          .then(
+            downloadUrl => {
+              console.log(downloadUrl)
+              resolve(downloadUrl)
+            }, (error) => {
+              console.log(error)
+              reject()
+            }
+          )
+      }
+    )
   }
 }
