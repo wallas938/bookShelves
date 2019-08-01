@@ -13,7 +13,7 @@ export class BookFormComponent implements OnInit {
 
   bookForm: FormGroup
   fileIsUpLoading = false
-  fileUrl: String
+  fileUrl: string
   fileUploaded = false
 
   constructor(
